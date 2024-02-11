@@ -1,5 +1,3 @@
-// @ts-check
-
 const fs = require('node:fs')
 const { z } = require('zod')
 
