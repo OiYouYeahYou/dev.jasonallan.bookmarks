@@ -1,0 +1,100 @@
+---
+import cn from 'classnames'
+import type { Page } from 'astro'
+
+interface Props {
+	page: Pick<Page, 'url' | 'currentPage' | 'lastPage'>
+}
+
+const { page } = Astro.props
+const {
+	url: { next, prev },
+	currentPage,
+	lastPage,
+} = page
+
+const pages = Array.from({ length: page.lastPage }, (_, i) => {
+	const page = i + 1
+	const isCurrentPage = currentPage === page
+	let href: string | undefined
+	if (!isCurrentPage) {
+		href = i === 1 ? './' : `./${page}`
+	}
+
+	return { page, href, isCurrentPage }
+})
+---
+
+{
+	lastPage !== 1 && (
+		<div class="paginator">
+			<a
+				class={cn(
+					'paginator__item',
+					Boolean(prev) || 'paginator__item--disabled',
+				)}
+				href={prev}
+			>
+				&lt;
+			</a>
+			{pages.map(({ page, href, isCurrentPage }) => {
+				return (
+					<a
+						href={href}
+						class={cn('paginator__item', {
+							['paginator__item--active']: isCurrentPage,
+						})}
+					>
+						{page}
+					</a>
+				)
+			})}
+			<a
+				class={cn(
+					'paginator__item',
+					Boolean(next) || 'paginator__item--disabled',
+				)}
+				href={next}
+			>
+				&gt;
+			</a>
+		</div>
+	)
+}
+
+<style lang="scss">
+	.paginator {
+		margin-top: 20px;
+		display: flex;
+		justify-content: center;
+		gap: 10px;
+
+		&__item {
+			&,
+			&:any-link {
+				color: black;
+				text-decoration: none;
+			}
+
+			&--disabled {
+				background-color: grey;
+			}
+
+			&--active {
+				background-color: blue;
+			}
+
+			display: block;
+			background: white;
+			min-width: 30px;
+			min-height: 30px;
+			text-align: center;
+			font-size: small;
+
+			// text-align: center;
+			line-height: 30px;
+			// width: 30px;
+			// height: 30px;
+		}
+	}
+</style>

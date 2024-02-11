@@ -2,6 +2,9 @@
 	"name": "bookmarks",
 	"type": "module",
 	"version": "0.0.1",
+	"workspaces": [
+		"tools"
+	],
 	"scripts": {
 		"dev": "astro dev",
 		"start": "astro dev",
@@ -13,7 +16,10 @@
 	},
 	"dependencies": {
 		"@astrojs/check": "^0.5.1",
+		"@astrojs/netlify": "^5.1.0",
 		"astro": "^4.3.5",
+		"classnames": "^2.5.1",
+		"sass": "^1.70.0",
 		"typescript": "^5.3.3"
 	},
 	"devDependencies": {
